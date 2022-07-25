@@ -5,23 +5,51 @@ import './App.css';
 class App extends Component {
   constructor(){
     super();
+    console.log(1)
+
     this.state = {
-      monsters: []
+      monsters: [],
+      searchField: [],
     }
   }
+
+  componentDidMount(){
+    console.log(2)
+    fetch('https://jsonplaceholder.typicode.com/users')
+    .then(response=> response.json())
+    .then(users=>{
+      this.setState(()=>{
+        return {
+          monsters: users
+        }
+      },()=>{
+        console.log(this.state)
+      })
+    })
+  }
+
   render(){
+    console.log(3)
+    const filteredMonsters = this.state.monsters.filter(monster => monster.name.toLowerCase().includes(this.state.searchField)) 
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Hi {this.state.name}, I wort at {this.state.company}
-          </p>
-          <button onClick={()=>{
-            this.setState({ name: 'Andrei'})
-            console.log(this.state)
-          }}>change name</button>
-        </header>
+        <input className='search-box' type="search" placeholder='search monsters' onChange={(event)=>{
+          console.log({event})
+          const searchField = event.target.value.toLowerCase()
+
+          this.setState(()=>{
+            return {
+              searchField
+            }
+          })
+        }} />
+        {
+          filteredMonsters.map(monster=>{
+            return (
+              <div key={monster.id}>{monster.name}</div>
+            )
+          })
+        }
       </div>
     )
   }
