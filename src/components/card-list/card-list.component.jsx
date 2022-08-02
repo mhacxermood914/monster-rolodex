@@ -2,10 +2,11 @@ import { Component } from "react"
 
 class CardList extends Component {
     constructor(){
-
+        super()
     }
 
     render(){
+        console.log('render card list')
         const { monsters } = this.props;
         return (
             <div>
