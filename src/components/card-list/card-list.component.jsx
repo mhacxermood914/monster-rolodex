@@ -1,10 +1,6 @@
 import { Component } from "react"
 
 class CardList extends Component {
-    constructor(){
-        super()
-    }
-
     render(){
         console.log('render card list')
         const { monsters } = this.props;
@@ -12,7 +8,11 @@ class CardList extends Component {
             <div>
                 {
                     monsters.map((monster)=>(
-                        <h1 key={monster.id}>{monster.name}</h1>
+                        <div className="card-container" key={monster.id}>
+                            <img alt={`monster ${monster.name}`} src={`https://robohash.org/${monster.id}?set=set2`} />
+                            <h2>{monster.name}</h2>
+                            <p>{monster.email}</p>
+                        </div>
                     ))
                 }
             </div>
